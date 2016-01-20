@@ -7,6 +7,7 @@
     "block-scoped-var": 2,
     "brace-style": [2, "1tbs"],
     "camelcase": 1,
+    "comma-spacing": 2,
     "computed-property-spacing": [2, "never"],
     "curly": 2,
     "indent": 2,
