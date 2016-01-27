@@ -7,6 +7,7 @@ router.post('/', function (req, res) {
     app.name = req.body.name;
     app.save(function (err, result) {
         if (err) {
+            res.status(500);
             res.send(err);
         } else {
             res.json(result);
