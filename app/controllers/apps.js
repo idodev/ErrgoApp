@@ -9,7 +9,7 @@ router.post('/', function (req, res) {
         if (err) {
             res.send(err);
         } else {
-            res.json({ id: result.id });
+            res.json(result);
         }
     });
 });
@@ -21,7 +21,9 @@ router.get('/:appId', function (req, res) {
             res.send(err);
         } else if (app === null) {
             res.status(404);
-            res.json({ msg: 'App not found' });
+            res.json({
+                msg: 'App not found'
+            });
         } else {
             res.json(app);
         }
@@ -35,14 +37,19 @@ router.put('/:appId', function (req, res) {
             res.send(err);
         } else if (app === null) {
             res.status(404);
-            res.json({ msg: 'App not found' });
+            res.json({
+                msg: 'App not found'
+            });
         } else {
             app.name = req.body.name;
             app.save(function (err, app) {
                 if (err) {
                     res.send(err);
                 } else {
-                    res.json({ msg: 'App has been updated successfully.', app: app });
+                    res.json({
+                        msg: 'App has been updated successfully.',
+                        app: app
+                    });
                 }
             });
         }
@@ -56,9 +63,14 @@ router.delete('/:appId', function (req, res) {
             res.send(err);
         } else if (app === null) {
             res.status(404);
-            res.json({ msg: 'App not found.' });
+            res.json({
+                msg: 'App not found.'
+            });
         } else {
-            res.json({ msg: 'App has been deleted successfully.', app: app });
+            res.json({
+                msg: 'App has been deleted successfully.',
+                app: app
+            });
         }
     });
 });
