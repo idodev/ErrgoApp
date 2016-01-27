@@ -16,4 +16,6 @@ exports.shutdown = function () {
     server.close();
     console.log('Terminated Express server');
 };
+
 exports.port = app.get('port');
+exports.root = 'http://localhost:' + app.get('port');

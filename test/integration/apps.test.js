@@ -3,16 +3,21 @@ var expect = require('expect.js');
 var request = require('superagent');
 
 describe('CRUD operations on Apps', function () {
-    var rootUrl, tempAppId;
+    var tempAppId;
 
-    before(function () {
+    before(function (done) {
         server.startup();
-        rootUrl = 'http://localhost:' + server.port;
+        done();
+    });
+
+    after(function (done) {
+        server.shutdown();
+        done();
     });
 
     it('Create an App with POST', function (done) {
         request
-        .post(rootUrl + '/apps/')
+        .post(server.root + '/apps/')
         .send({ name: 'JustPlainFoo' })
         .end(function (err, res) {
             expect(res.status).to.equal(200);
@@ -27,7 +32,7 @@ describe('CRUD operations on Apps', function () {
 
     it('Fetch App with GET', function (done) {
         request
-        .get(rootUrl + '/apps/' + tempAppId)
+        .get(server.root + '/apps/' + tempAppId)
         .end(function (err, res) {
             // check this matches what was entered in the create test!
             expect(res.status).to.equal(200);
@@ -37,7 +42,7 @@ describe('CRUD operations on Apps', function () {
 
     it('Update app with PUT', function (done) {
         request
-        .put(rootUrl + '/apps/' + tempAppId)
+        .put(server.root + '/apps/' + tempAppId)
         .send({ name: 'GoingOnBar' })
         .end(function (err, res) {
             // check return contains updates!
@@ -51,7 +56,7 @@ describe('CRUD operations on Apps', function () {
 
     it('Remove app with DELETE', function (done) {
         request
-        .delete(rootUrl + '/apps/' + tempAppId)
+        .delete(server.root + '/apps/' + tempAppId)
         .end(function (err, res) {
             // check return data is as expected
             expect(res.status).to.equal(200);
@@ -64,15 +69,11 @@ describe('CRUD operations on Apps', function () {
 
     it('Get 404 for request for (now deleted) app', function (done) {
         request
-        .get(rootUrl + '/apps/' + tempAppId)
+        .get(server.root + '/apps/' + tempAppId)
         .end(function (err, res) {
             // check this matches what was entered in the create test!
             expect(res.status).to.equal(404);
             done();
         });
-    });
-
-    after(function () {
-        server.shutdown();
     });
 });
