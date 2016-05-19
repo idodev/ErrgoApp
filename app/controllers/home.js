@@ -4,12 +4,9 @@ var apps = require('../models/apps');
 /* GET home page. */
 router.get('/', function (req, res) {
     // List all applications
-    apps.find(function (err, apps) {
-        if (err) {
-            res.send(err);
-        }
-
-        res.render('index', { title: 'Express', apps: apps });
+    res.render('index', {
+        title: 'Express',
+        user: req.user
     });
 });
 
