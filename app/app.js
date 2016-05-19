@@ -6,8 +6,6 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
-require('./db');
-
 var app = express();
 
 // view engine setup

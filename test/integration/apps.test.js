@@ -7,12 +7,8 @@ describe('CRUD operations on Apps', function () {
     var tempAppId;
 
     before(function (done) {
-        //server.startup();
-        done();
-    });
-
-    after(function (done) {
-        //server.shutdown();
+        // Connect to database
+        require('../../app/db');
         done();
     });
 

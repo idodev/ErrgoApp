@@ -5,6 +5,12 @@ var supertest = require('supertest')(app);
 
 describe('Home Page Validation', function () {
 
+    before(function (done) {
+        // Connect to database
+        require('../../app/db');
+        done();
+    });
+
     it('Responds to a GET request', function (done) {
         supertest
         .get('/')
