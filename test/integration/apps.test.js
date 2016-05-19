@@ -1,23 +1,24 @@
-var server = require('./testServer');
 var expect = require('expect.js');
-var request = require('superagent');
+var app = require('../../app/app');
+var supertest = require('supertest')(app);
+
 
 describe('CRUD operations on Apps', function () {
     var tempAppId;
 
     before(function (done) {
-        server.startup();
+        //server.startup();
         done();
     });
 
     after(function (done) {
-        server.shutdown();
+        //server.shutdown();
         done();
     });
 
     it('Create an App with POST', function (done) {
-        request
-        .post(server.root + '/apps/')
+        supertest
+        .post('/apps/')
         .send({ name: 'JustPlainFoo' })
         .end(function (err, res) {
             expect(res.status).to.equal(200);
@@ -31,8 +32,8 @@ describe('CRUD operations on Apps', function () {
     });
 
     it('Fetch App with GET', function (done) {
-        request
-        .get(server.root + '/apps/' + tempAppId)
+        supertest
+        .get('/apps/' + tempAppId)
         .end(function (err, res) {
             // check this matches what was entered in the create test!
             expect(res.status).to.equal(200);
@@ -41,8 +42,8 @@ describe('CRUD operations on Apps', function () {
     });
 
     it('Update app with PUT', function (done) {
-        request
-        .put(server.root + '/apps/' + tempAppId)
+        supertest
+        .put('/apps/' + tempAppId)
         .send({ name: 'GoingOnBar' })
         .end(function (err, res) {
             // check return contains updates!
@@ -55,8 +56,8 @@ describe('CRUD operations on Apps', function () {
     });
 
     it('Remove app with DELETE', function (done) {
-        request
-        .delete(server.root + '/apps/' + tempAppId)
+        supertest
+        .delete('/apps/' + tempAppId)
         .end(function (err, res) {
             // check return data is as expected
             expect(res.status).to.equal(200);
@@ -67,9 +68,9 @@ describe('CRUD operations on Apps', function () {
         });
     });
 
-    it('Get 404 for request for (now deleted) app', function (done) {
-        request
-        .get(server.root + '/apps/' + tempAppId)
+    it('Get 404 for (now deleted) app', function (done) {
+        supertest
+        .get('/apps/' + tempAppId)
         .end(function (err, res) {
             // check this matches what was entered in the create test!
             expect(res.status).to.equal(404);
